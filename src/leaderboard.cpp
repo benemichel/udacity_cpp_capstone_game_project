@@ -17,7 +17,6 @@ LeaderBoard *LeaderBoard::GetInstance() {
     return _leaderBoard;
 }
 
-LeaderBoard::LeaderBoard() {}
 
 std::vector<int> LeaderBoard::GetLeaderBoardScores(){
 

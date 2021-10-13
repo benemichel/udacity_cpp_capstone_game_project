@@ -12,7 +12,10 @@ int main() {
   constexpr std::size_t kGridWidth{32};
   constexpr std::size_t kGridHeight{32};
 
-  LeaderBoard* leaderBoard = LeaderBoard::GetInstance();
+  // LeaderBoard* leaderBoard = LeaderBoard::GetInstance();
+  LeaderBoard* leaderBoard = new LeaderBoard();
+
+
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
   Controller controller;
   Game game(kGridWidth, kGridHeight);
