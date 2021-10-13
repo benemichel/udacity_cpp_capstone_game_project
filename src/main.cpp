@@ -2,6 +2,7 @@
 #include "controller.h"
 #include "game.h"
 #include "renderer.h"
+#include "leaderboard.h"
 
 int main() {
   constexpr std::size_t kFramesPerSecond{60};
@@ -11,10 +12,11 @@ int main() {
   constexpr std::size_t kGridWidth{32};
   constexpr std::size_t kGridHeight{32};
 
+  LeaderBoard* leaderBoard = LeaderBoard::GetInstance();
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
   Controller controller;
   Game game(kGridWidth, kGridHeight);
-  game.Run(controller, renderer, kMsPerFrame);
+  game.Run(controller, renderer, kMsPerFrame, leaderBoard);
   std::cout << "Game has terminated successfully!\n";
   std::cout << "Score: " << game.GetScore() << "\n";
   std::cout << "Size: " << game.GetSize() << "\n";

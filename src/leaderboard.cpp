@@ -3,6 +3,10 @@
 #include <iostream>
 
 #include <vector>
+#include <algorithm>
+
+
+LeaderBoard* LeaderBoard::_leaderBoard = nullptr;
 
 LeaderBoard *LeaderBoard::GetInstance() {
     if (_leaderBoard == nullptr) {
@@ -12,6 +16,8 @@ LeaderBoard *LeaderBoard::GetInstance() {
 
     return _leaderBoard;
 }
+
+LeaderBoard::LeaderBoard() {}
 
 std::vector<int> LeaderBoard::GetLeaderBoardScores(){
 
@@ -30,5 +36,22 @@ std::vector<int> LeaderBoard::GetLeaderBoardScores(){
     for (auto score : _leaderBoardScores) {
         std::cout << "score: " << score << "\n";
     }
+
+}
+
+void LeaderBoard::WriteToLeaderBoard(int score) {
+    std::vector<int> newScores = _leaderBoardScores;
+    newScores.push_back(score);
+    std::sort(newScores.begin(), newScores.end());
+    std::reverse(newScores.begin(), newScores.end());
+
+    // write to file
+    std::ofstream file;
+    file.open(_filepath);
+    
+    for (int score : newScores) {
+        file << score << "\n";
+    }
+
 
 }
