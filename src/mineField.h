@@ -4,7 +4,7 @@
 #include <vector>
 #include "SDL.h"
 
-class Snake {
+class MineField {
 
     public:
         std::vector<SDL_Point> Mines();

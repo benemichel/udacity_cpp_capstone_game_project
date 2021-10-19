@@ -13,13 +13,13 @@ int main() {
   constexpr std::size_t kGridHeight{32};
 
   // LeaderBoard* leaderBoard = LeaderBoard::GetInstance();
-  LeaderBoard* leaderBoard = new LeaderBoard();
+  // LeaderBoard* leaderBoard = new LeaderBoard();
 
 
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
   Controller controller;
   Game game(kGridWidth, kGridHeight);
-  game.Run(controller, renderer, kMsPerFrame, leaderBoard);
+  game.Run(controller, renderer, kMsPerFrame);
   std::cout << "Game has terminated successfully!\n";
   std::cout << "Score: " << game.GetScore() << "\n";
   std::cout << "Size: " << game.GetSize() << "\n";
