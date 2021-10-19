@@ -20,6 +20,11 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   int frame_count = 0;
   bool running = true;
 
+  // render the game
+
+  renderer.RenderLeaderBoard();
+
+
   while (running) {
     frame_start = SDL_GetTicks();
 

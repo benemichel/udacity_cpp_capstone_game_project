@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 
+
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
                    const std::size_t grid_width, const std::size_t grid_height)
@@ -16,6 +17,7 @@ Renderer::Renderer(const std::size_t screen_width,
   }
 
   // Create Window
+  // SDL_CreateWindow(title, x pos of window, y pos of window, widht of window ...)
   sdl_window = SDL_CreateWindow("Snake Game", SDL_WINDOWPOS_CENTERED,
                                 SDL_WINDOWPOS_CENTERED, screen_width,
                                 screen_height, SDL_WINDOW_SHOWN);
@@ -47,13 +49,13 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(sdl_renderer);
 
-  // Render food
+  // Render food block
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
   block.x = food.x * block.w;
   block.y = food.y * block.h;
   SDL_RenderFillRect(sdl_renderer, &block);
 
-  // Render snake's body
+  // Render snake's body (multiple blocks)
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
   for (SDL_Point const &point : snake.body) {
     block.x = point.x * block.w;
@@ -61,7 +63,7 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
     SDL_RenderFillRect(sdl_renderer, &block);
   }
 
-  // Render snake's head
+  // Render snake's head (one block)
   block.x = static_cast<int>(snake.head_x) * block.w;
   block.y = static_cast<int>(snake.head_y) * block.h;
   if (snake.alive) {
@@ -75,7 +77,18 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
   SDL_RenderPresent(sdl_renderer);
 }
 
+// update title: score and FPS
 void Renderer::UpdateWindowTitle(int score, int fps) {
   std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }
+
+// void Renderer::RenderLeaderBoard() {
+//   int numHighscores = 5;
+
+//   TTF_Init();
+
+//   for (int i = 0; i < numHighscores; i++) {
+  
+//   }
+// }
