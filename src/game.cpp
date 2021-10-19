@@ -1,19 +1,24 @@
 #include "game.h"
 #include <iostream>
 #include "SDL.h"
-#include "leaderboard.h"
+
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
-    : mineField()
-      snake(grid_width, grid_height),
+    : snake(grid_width, grid_height),
       engine(dev()),
       random_w(0, static_cast<int>(grid_width - 1)),
       random_h(0, static_cast<int>(grid_height - 1)) {
+
   PlaceFood();
+  // Fill the mineField
+
+  PlaceMines();
+
+  // mineField.PlaceMines();
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
-               std::size_t target_frame_duration, LeaderBoard *leaderBoard) {
+               std::size_t target_frame_duration) {
   Uint32 title_timestamp = SDL_GetTicks();
   Uint32 frame_start;
   Uint32 frame_end;
@@ -25,8 +30,8 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 
   //renderer.RenderLeaderBoard();
 
-  // Fill the mineField
-  mineField.PlaceMines();
+
+  
 
 
   while (running) {
@@ -35,7 +40,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake);
     Update();
-    renderer.Render(snake, food, mineField);
+    renderer.Render(snake, food, mines);
 
     frame_end = SDL_GetTicks();
 
@@ -71,6 +76,28 @@ void Game::PlaceFood() {
       food.x = x;
       food.y = y;
       return;
+    }
+  }
+}
+
+void Game::PlaceMines() {
+  int x, y;
+  int nMines = 5;
+
+  for (int i = 0; i < nMines; i++) {
+    
+    SDL_Point mine;
+    // check if occupied by food or snake
+    while (true) {
+        x = random_w(engine);
+        y = random_h(engine);
+
+        if (!snake.SnakeCell(x, y)) {
+            mine.x = x;
+            mine.y = y;
+            mines.push_back(mine);
+            break;
+        }
     }
   }
 }

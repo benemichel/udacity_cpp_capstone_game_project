@@ -2,7 +2,8 @@
 #include <vector>
 #include "SDL.h"
 
-std::vector<SDL_Point> Mines() {
+
+std::vector<SDL_Point> MineField::Mines() {
     return _mines;
 }
 
